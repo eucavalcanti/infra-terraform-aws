@@ -1,0 +1,28 @@
+terraform {
+  required_version = ">= 1.5"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+module "dynamodb" {
+  source = "../../modules/dynamodb"
+
+  name = "exemplo-dynamodb-basic-table"
+  tags = {
+    Project   = "exemplo-dynamodb-basic"
+    ManagedBy = "terraform"
+  }
+}
+
+output "table_name" {
+  value = module.dynamodb.table_name
+}

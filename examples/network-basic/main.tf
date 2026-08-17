@@ -1,0 +1,32 @@
+terraform {
+  required_version = ">= 1.5"
+
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  region = "us-east-1"
+}
+
+module "network" {
+  source = "../../modules/network"
+
+  name = "exemplo-network-basic"
+  tags = {
+    Project   = "exemplo-network-basic"
+    ManagedBy = "terraform"
+  }
+}
+
+output "vpc_id" {
+  value = module.network.vpc_id
+}
+
+output "private_subnet_ids" {
+  value = module.network.private_subnet_ids
+}
